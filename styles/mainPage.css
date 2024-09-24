@@ -6,11 +6,16 @@
 
 .select-box {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin: 30vh 0 1rem 0;
 }
-
+@media (max-width: 425px) {
+  .select-box button {
+    margin-top: 1rem !important;
+  }
+}
 .select-box button {
   background-color: white;
   color: black;
