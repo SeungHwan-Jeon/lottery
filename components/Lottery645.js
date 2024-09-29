@@ -4,19 +4,22 @@ import { useEffect, useState } from "react";
 import "../styles/lottery645.css";
 
 export default function Lottery645() {
-  const [maxRound, setMaxRound] = useState("");
-
+  let [currentRound, setCurrentRound] = useState(null);
   useEffect(() => {
-    async function fetchLottoData() {
-      try {
-        const response = await fetch("/api/lotto");
-        const data = await response.json();
-        setMaxRound(data.maxRound);
-      } catch (error) {
-        console.error("Error", error);
-      }
-    }
-    fetchLottoData();
+    fetch("/api/currentRound")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setCurrentRound(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Fetch error: ", error);
+      });
   }, []);
 
   return (
@@ -25,8 +28,8 @@ export default function Lottery645() {
         <div className="pick_btn">
           <div>
             <h1>
-              현재 로또 회차:{" "}
-              {maxRound ? maxRound : "데이터를 가져올 수 없습니다"}
+              현재 로또 회차:
+              {currentRound ? currentRound : "데이터를 가져올 수 없습니다"}
             </h1>
           </div>
           <button>랜덤 뽑기</button>
