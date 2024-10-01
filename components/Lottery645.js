@@ -1,13 +1,23 @@
 "use client";
 
+import "../styles/lottery645.css";
 import React from "react";
 import { useEffect, useState } from "react";
-import "../styles/lottery645.css";
+import RandomPick from "./Lottery645/RandomPick";
+import ProbabilityPick from "./Lottery645/FavoritePick";
+import UnderdogPick from "./Lottery645/UnderdogPick";
+import { randomPickFunction } from "@/lib/pickFunctions";
 
 export default function Lottery645() {
   let [currentRound, setCurrentRound] = useState(null);
-  let [numbers, setNumbers] = useState([]);
   let [isLoading, setIsLoading] = useState(true);
+
+  const [selectedButton, setSelectedButton] = useState("random");
+  const [selectedNumbers, setSelectedNumbers] = useState([]);
+
+  function handleButtonClick(buttonType) {
+    setSelectedButton(buttonType);
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -29,33 +39,69 @@ export default function Lottery645() {
       });
   }, []);
 
+  function getBallClass(number) {
+    if (number <= 9) return "ball0";
+    if (number <= 19) return "ball1";
+    if (number <= 29) return "ball2";
+    if (number <= 39) return "ball3";
+    return "ball4";
+  }
+
   return (
     <>
       <div>
-        <div className="pick_btn">
-          <div>
-            <h1>
-              현재 로또 회차:
-              {isLoading
-                ? "로딩 중..."
-                : currentRound
-                ? currentRound
-                : "데이터를 가져올 수 없습니다"}
-            </h1>
-          </div>
-          <button>랜덤 뽑기</button>
-          <button>확률 뽑기</button>
+        <div>
+          <h1>
+            현재 로또 회차:
+            {isLoading
+              ? "로딩 중..."
+              : currentRound
+              ? currentRound
+              : "데이터를 가져올 수 없습니다"}
+          </h1>
         </div>
+
+        <div className="button-container">
+          <button
+            className={`pick-button ${
+              selectedButton === "random" ? "selected" : ""
+            }`}
+            onClick={() => handleButtonClick("random")}
+          >
+            랜덤 픽
+          </button>
+          <button
+            className={`pick-button ${
+              selectedButton === "probability" ? "selected" : ""
+            }`}
+            onClick={() => handleButtonClick("probability")}
+          >
+            확률 픽
+          </button>
+          <button
+            className={`pick-button ${
+              selectedButton === "underdog" ? "selected" : ""
+            }`}
+            onClick={() => handleButtonClick("underdog")}
+          >
+            언더독 픽
+          </button>
+        </div>
+
+        {selectedButton === "random" && (
+          <RandomPick setSelectedNumbers={setSelectedNumbers} />
+        )}
+        {selectedButton === "probability" && <ProbabilityPick />}
+        {selectedButton === "underdog" && <UnderdogPick />}
+
         <div className="nums">
           <p>
-            <span className="ball_645  ball0">1</span>
-            <span className="ball_645  ball1">2</span>
-            <span className="ball_645  ball2">3</span>
-            <span className="ball_645  ball3">4</span>
-            <span className="ball_645  ball4">5</span>
-            <span className="ball_645  ball4">6</span>
+            {selectedNumbers.map((number, index) => (
+              <span key={index} className={`ball_645 ${getBallClass(number)}`}>
+                {number}
+              </span>
+            ))}
           </p>
-          <button className="save_btn">저장</button>
         </div>
       </div>
     </>
