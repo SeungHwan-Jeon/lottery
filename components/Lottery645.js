@@ -1,12 +1,17 @@
 "use client";
 
+import React from "react";
 import { useEffect, useState } from "react";
 import "../styles/lottery645.css";
 
 export default function Lottery645() {
   let [currentRound, setCurrentRound] = useState(null);
+  let [numbers, setNumbers] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    fetch("/api/currentRound")
+    setIsLoading(true);
+    fetch("/api/test")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -14,11 +19,13 @@ export default function Lottery645() {
         return res.json();
       })
       .then((data) => {
-        setCurrentRound(data);
+        setCurrentRound(data.round);
+        setIsLoading(false);
         console.log(data);
       })
       .catch((error) => {
         console.error("Fetch error: ", error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -29,7 +36,11 @@ export default function Lottery645() {
           <div>
             <h1>
               현재 로또 회차:
-              {currentRound ? currentRound : "데이터를 가져올 수 없습니다"}
+              {isLoading
+                ? "로딩 중..."
+                : currentRound
+                ? currentRound
+                : "데이터를 가져올 수 없습니다"}
             </h1>
           </div>
           <button>랜덤 뽑기</button>

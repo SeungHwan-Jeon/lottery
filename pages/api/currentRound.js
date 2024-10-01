@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer";
-import cron from "node-cron";
 import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
 
@@ -30,15 +29,21 @@ export default async function updateLottoRound(req, res) {
     await browser.close();
     console.log(currentRound);
 
-    weeklyCollection.updateOne(
-      { _id: roundId },
-      { $set: { round: currentRound } }
-    );
-    res.status(200).json(currentRound);
-    // else {
-    //   res.status(200).json({ message: "No update needed, round is the same." });
-    // }
+    if (currentRound !== dbRound) {
+      await weeklyCollection.updateOne(
+        { _id: roundId },
+        { $set: { round: currentRound } }
+      );
+      res.status(200).json({
+        round: currentRound,
+      });
+    } else {
+      res.status(200).json({
+        round: currentRound,
+      });
+    }
   } catch (error) {
-    console.error("Failed to fetch or update lotto round:", error);
+    console.error("로또 회차 정보 조회 또는 업데이트 실패:", error);
+    res.status(500).json("");
   }
 }
