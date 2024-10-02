@@ -14,6 +14,7 @@ export default function Lottery645() {
 
   const [selectedButton, setSelectedButton] = useState("random");
   const [selectedNumbers, setSelectedNumbers] = useState([]);
+  const [numArrayList, setNumArrayList] = useState([]);
 
   function handleButtonClick(buttonType) {
     setSelectedButton(buttonType);
@@ -89,18 +90,46 @@ export default function Lottery645() {
         </div>
 
         {selectedButton === "random" && (
-          <RandomPick setSelectedNumbers={setSelectedNumbers} />
+          <RandomPick
+            setSelectedNumbers={setSelectedNumbers}
+            numArrayList={numArrayList}
+            setNumArrayList={setNumArrayList}
+          />
         )}
         {selectedButton === "probability" && <ProbabilityPick />}
         {selectedButton === "underdog" && <UnderdogPick />}
 
         <div className="nums">
           <p>
-            {selectedNumbers.map((number, index) => (
-              <span key={index} className={`ball_645 ${getBallClass(number)}`}>
-                {number}
-              </span>
-            ))}
+            {numArrayList.map((item, index) => {
+              return (
+                <>
+                  <div key={index}>
+                    {item.map((number, index) => (
+                      <>
+                        <span
+                          key={index}
+                          className={`ball_645 ${getBallClass(number)}`}
+                        >
+                          {number}
+                        </span>
+                      </>
+                    ))}
+                    <button
+                      onClick={() => {
+                        setNumArrayList(
+                          numArrayList.filter((_, i) => i !== index)
+                        );
+                      }}
+                      className="action-button delete-button"
+                    >
+                      삭제
+                    </button>
+                    <button className="action-button save-button">저장</button>
+                  </div>
+                </>
+              );
+            })}
           </p>
         </div>
       </div>

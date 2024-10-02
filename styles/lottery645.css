@@ -1,4 +1,4 @@
-/* 뽑기 버튼 */
+뽑기 버튼
 /* 당첨 볼 스타일 */
 .nums {
   flex-direction: column;
@@ -76,4 +76,43 @@
 .pick-button.selected {
   background-color: #007bff;
   color: white;
+}
+
+/* 삭제 및 저장 버튼 스타일 */
+.action-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: 2px solid;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.delete-button {
+  border-color: #ff7272;
+  color: #ff7272;
+}
+
+.delete-button:hover {
+  background-color: #ff7272;
+  color: white;
+}
+
+.save-button {
+  border-color: #b0d840;
+  color: #b0d840;
+}
+
+.save-button:hover {
+  background-color: #b0d840;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .action-button {
+    padding: 3px 6px;
+    font-size: 12px;
+    margin-left: 5px;
+  }
 }
