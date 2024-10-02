@@ -13,7 +13,6 @@ export default function Lottery645() {
   let [isLoading, setIsLoading] = useState(true);
 
   const [selectedButton, setSelectedButton] = useState("random");
-  const [selectedNumbers, setSelectedNumbers] = useState([]);
   const [numArrayList, setNumArrayList] = useState([]);
 
   function handleButtonClick(buttonType) {
@@ -91,7 +90,6 @@ export default function Lottery645() {
 
         {selectedButton === "random" && (
           <RandomPick
-            setSelectedNumbers={setSelectedNumbers}
             numArrayList={numArrayList}
             setNumArrayList={setNumArrayList}
           />

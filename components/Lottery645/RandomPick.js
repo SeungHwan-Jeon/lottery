@@ -3,11 +3,7 @@
 import { randomPickFunction } from "@/lib/pickFunctions";
 import styles from "../../styles/RandomPick.module.css";
 
-export default function RandomPick({
-  setSelectedNumbers,
-  setNumArrayList,
-  numArrayList,
-}) {
+export default function RandomPick({ setNumArrayList, numArrayList }) {
   return (
     <>
       <div className={styles.randomPickContainer}>
@@ -18,7 +14,6 @@ export default function RandomPick({
               console.log("5개 초과");
             } else {
               let numbers = randomPickFunction();
-              setSelectedNumbers(numbers);
               setNumArrayList([...numArrayList, numbers]);
             }
           }}
