@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   try {
     const db = (await connectDB).db("lottery");
     const roundId = new ObjectId("66f9009da30060a5737c1c08");
-    let weeklyCollection = await db.collection("weekly");
+    let weeklyCollection = await db.collection("weekly_data");
     let dbRound = (
       await weeklyCollection.findOne({
         _id: roundId,

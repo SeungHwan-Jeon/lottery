@@ -4,15 +4,15 @@ import "../styles/lottery645.css";
 import React from "react";
 import { useEffect, useState } from "react";
 import RandomPick from "./Lottery645/RandomPick";
-import ProbabilityPick from "./Lottery645/FavoritePick";
+import ProbabilityPick from "./Lottery645/ProbabilityPick";
 import UnderdogPick from "./Lottery645/UnderdogPick";
-import { randomPickFunction } from "@/lib/pickFunctions";
 
 export default function Lottery645() {
   let [currentRound, setCurrentRound] = useState(null);
   let [isLoading, setIsLoading] = useState(true);
 
   const [selectedButton, setSelectedButton] = useState("random");
+  const [pickedType, setPickedType] = useState([]);
   const [numArrayList, setNumArrayList] = useState([]);
 
   function handleButtonClick(buttonType) {
@@ -90,11 +90,20 @@ export default function Lottery645() {
 
         {selectedButton === "random" && (
           <RandomPick
+            pickedType={pickedType}
+            setPickedType={setPickedType}
             numArrayList={numArrayList}
             setNumArrayList={setNumArrayList}
           />
         )}
-        {selectedButton === "probability" && <ProbabilityPick />}
+        {selectedButton === "probability" && (
+          <ProbabilityPick
+            pickedType={pickedType}
+            setPickedType={setPickedType}
+            numArrayList={numArrayList}
+            setNumArrayList={setNumArrayList}
+          />
+        )}
         {selectedButton === "underdog" && <UnderdogPick />}
 
         <div className="nums">
@@ -103,6 +112,7 @@ export default function Lottery645() {
               return (
                 <>
                   <div key={index}>
+                    <span>{pickedType[index]}</span>
                     {item.map((number, index) => (
                       <>
                         <span

@@ -3,7 +3,12 @@
 import { randomPickFunction } from "@/lib/pickFunctions";
 import styles from "../../styles/RandomPick.module.css";
 
-export default function RandomPick({ setNumArrayList, numArrayList }) {
+export default function RandomPick({
+  setNumArrayList,
+  numArrayList,
+  setPickedType,
+  pickedType,
+}) {
   return (
     <>
       <div className={styles.randomPickContainer}>
@@ -15,6 +20,7 @@ export default function RandomPick({ setNumArrayList, numArrayList }) {
             } else {
               let numbers = randomPickFunction();
               setNumArrayList([...numArrayList, numbers]);
+              setPickedType([...pickedType, "랜덤"]);
             }
           }}
         >
