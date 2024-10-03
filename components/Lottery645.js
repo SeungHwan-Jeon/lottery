@@ -31,7 +31,6 @@ export default function Lottery645() {
       .then((data) => {
         setCurrentRound(data.round);
         setIsLoading(false);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Fetch error: ", error);
@@ -107,38 +106,31 @@ export default function Lottery645() {
         {selectedButton === "underdog" && <UnderdogPick />}
 
         <div className="nums">
-          <p>
-            {numArrayList.map((item, index) => {
-              return (
-                <>
-                  <div key={index}>
-                    <span>{pickedType[index]}</span>
-                    {item.map((number, index) => (
-                      <>
-                        <span
-                          key={index}
-                          className={`ball_645 ${getBallClass(number)}`}
-                        >
-                          {number}
-                        </span>
-                      </>
-                    ))}
-                    <button
-                      onClick={() => {
-                        setNumArrayList(
-                          numArrayList.filter((_, i) => i !== index)
-                        );
-                      }}
-                      className="action-button delete-button"
-                    >
-                      삭제
-                    </button>
-                    <button className="action-button save-button">저장</button>
-                  </div>
-                </>
-              );
-            })}
-          </p>
+          {numArrayList.map((item, index) => {
+            return (
+              <div key={index}>
+                <span>{pickedType[index]}</span>
+                {item.map((number, numIndex) => (
+                  <span
+                    key={`${number}-${numIndex}`}
+                    className={`ball_645 ${getBallClass(number)}`}
+                  >
+                    {number}
+                  </span>
+                ))}
+                <button
+                  onClick={() => {
+                    setNumArrayList(numArrayList.filter((_, i) => i !== index));
+                    setPickedType(pickedType.filter((_, i) => i !== index));
+                  }}
+                  className="action-button delete-button"
+                >
+                  삭제
+                </button>
+                <button className="action-button save-button">저장</button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </>

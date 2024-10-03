@@ -4,7 +4,12 @@ import { probabilityPickFunction } from "@/lib/pickFunctions";
 import styles from "../../styles/RandomPick.module.css";
 import { useEffect, useState } from "react";
 
-export default function ProbabilityPick({ setNumArrayList, numArrayList }) {
+export default function ProbabilityPick({
+  setNumArrayList,
+  numArrayList,
+  setPickedType,
+  pickedType,
+}) {
   let [probabilityData, setProbabilityData] = useState();
 
   useEffect(() => {
@@ -19,8 +24,6 @@ export default function ProbabilityPick({ setNumArrayList, numArrayList }) {
       });
   }, []);
 
-  console.log(probabilityData);
-
   return (
     <>
       <div className={styles.randomPickContainer}>
@@ -30,7 +33,9 @@ export default function ProbabilityPick({ setNumArrayList, numArrayList }) {
             if (numArrayList.length == 5) {
               console.log("5개 초과");
             } else {
-              probabilityPickFunction(probabilityData);
+              let numbers = probabilityPickFunction(probabilityData);
+              setNumArrayList([...numArrayList, numbers]);
+              setPickedType([...pickedType, "확률"]);
             }
           }}
         >
