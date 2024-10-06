@@ -18,6 +18,7 @@ export default function Lottery645() {
   function handleButtonClick(buttonType) {
     setSelectedButton(buttonType);
   }
+  // 로또 번호 추출 함수
 
   useEffect(() => {
     setIsLoading(true);
@@ -103,7 +104,14 @@ export default function Lottery645() {
             setNumArrayList={setNumArrayList}
           />
         )}
-        {selectedButton === "underdog" && <UnderdogPick />}
+        {selectedButton === "underdog" && (
+          <UnderdogPick
+            pickedType={pickedType}
+            setPickedType={setPickedType}
+            numArrayList={numArrayList}
+            setNumArrayList={setNumArrayList}
+          />
+        )}
 
         <div className="nums">
           {numArrayList.map((item, index) => {
