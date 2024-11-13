@@ -1,7 +1,12 @@
-뽑기 버튼
 /* 당첨 볼 스타일 */
 .nums {
   flex-direction: column;
+}
+
+.nums div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .ball_645 {

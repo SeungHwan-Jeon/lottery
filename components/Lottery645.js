@@ -49,7 +49,7 @@ export default function Lottery645() {
 
   return (
     <>
-      <div>
+      <div className="container">
         <div>
           <h1>
             현재 로또 회차:
